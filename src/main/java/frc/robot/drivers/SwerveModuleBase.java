@@ -21,6 +21,8 @@ import frc.robot.lib.util.CTREModuleState;
 import frc.robot.lib.util.Gearbox;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /** Base for constructing any swerve module
  * * Basic Logic is that:
@@ -34,8 +36,8 @@ public class SwerveModuleBase {
 
     private String mId;
     private int mModuleNumber;
-    private WPI_TalonFX mDriveMotor;
-    private WPI_TalonFX mAngleMotor;
+    private CANSparkMax mDriveMotor;
+    private CANSparkMax mAngleMotor;
     private WPI_CANCoder mRotEncoder;
 
     private SimpleMotorFeedforward mDriveFeedforward;
@@ -72,9 +74,9 @@ public class SwerveModuleBase {
 
         mDriveFeedforward = new SimpleMotorFeedforward(constants.moduleTuningkS, constants.moduleTuningkV, DriveConstants.drivekA);
 
-        mRotEncoder = new WPI_CANCoder(constants.CANCoderID, Constants.CANIVORE_CANBUS);
-        mDriveMotor = new WPI_TalonFX(constants.driveMotorID);
-        mAngleMotor = new WPI_TalonFX(constants.angleMotorID);
+        mRotEncoder = new WPI_CANCoder(constants.CANCoderID);
+        mDriveMotor = new CANSparkMax(constants.driveMotorID, MotorType.kBrushless);
+        mAngleMotor = new CANSparkMax(constants.angleMotorID, MotorType.kBrushless);
 
         configAll(); // Configs all the motors and encoders
 
